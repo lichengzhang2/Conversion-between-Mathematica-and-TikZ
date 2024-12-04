@@ -2,7 +2,7 @@ This is the conversion between Mathematica and TikZiT (https://github.com/tikzit
 
 
 
-
+## 1. graph from Mathematica to tikz
 
 ```
 g = WheelGraph[20];
@@ -78,3 +78,17 @@ Output:
 \end{tikzpicture}
 ```
 ![image](https://github.com/user-attachments/assets/bbc4dede-7a40-4817-91cb-3942f0021fe4)
+
+
+
+
+## 2. graph from  tikz to Mathematica
+```
+SetDirectory[NotebookDirectory[]];
+graph = ImportTikZGraph["scaled_graph_output.tikz"];
+```
+![image](https://github.com/user-attachments/assets/ee47b49a-7180-49d6-ba4e-eed628986055)
+
+
+
+
