@@ -1,0 +1,319 @@
+(* Content-type: application/vnd.wolfram.cdf.text *)
+
+(*** Wolfram CDF File ***)
+(* http://www.wolfram.com/cdf *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*************************************************************************)
+(*                                                                       *)
+(*                                                                       *)
+(*  This file was created under the Wolfram Enterprise licensing terms.  *)
+(*                                                                       *)
+(*       For additional information concerning CDF licensing see:        *)
+(*                                                                       *)
+(*        www.wolfram.com/cdf/adopting-cdf/licensing-options.html        *)
+(*                                                                       *)
+(*                                                                       *)
+(*                                                                       *)
+(*************************************************************************)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[      1060,         20]
+NotebookDataLength[     12448,        298]
+NotebookOptionsPosition[     12837,        293]
+NotebookOutlinePosition[     13264,        310]
+CellTagsIndexPosition[     13221,        307]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "ImportTikZGraph", "]"}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ImportTikZGraph", "[", "file_String", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "tikzCode", ",", "lines", ",", "nodes", ",", "edges", ",", "line", ",", 
+       "parts", ",", "nodeID", ",", "xCoord", ",", "yCoord", ",", "startNode",
+        ",", "endNode", ",", "g"}], "}"}], ",", 
+     RowBox[{"(*", 
+      RowBox[{
+      "Import", " ", "the", " ", "TikZ", " ", "code", " ", "from", " ", "the",
+        " ", "file"}], "*)"}], 
+     RowBox[{
+      RowBox[{"tikzCode", "=", 
+       RowBox[{"Import", "[", 
+        RowBox[{"file", ",", "\"\<Text\>\""}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+       "Initialize", " ", "lists", " ", "for", " ", "nodes", " ", "and", " ", 
+        "edges"}], "*)"}], 
+      RowBox[{"nodes", "=", 
+       RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"edges", "=", 
+       RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+       "Split", " ", "the", " ", "TikZ", " ", "code", " ", "into", " ", 
+        "lines"}], "*)"}], 
+      RowBox[{"lines", "=", 
+       RowBox[{"StringSplit", "[", 
+        RowBox[{"tikzCode", ",", "\"\<\\n\>\""}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Extract", " ", "node", " ", "information"}], "*)"}], 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "1"}], ",", 
+        RowBox[{"i", "<=", 
+         RowBox[{"Length", "[", "lines", "]"}]}], ",", 
+        RowBox[{"i", "++"}], ",", 
+        RowBox[{
+         RowBox[{"line", "=", 
+          RowBox[{"StringTrim", "[", 
+           RowBox[{"lines", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"StringStartsQ", "[", 
+            RowBox[{"line", ",", "\"\<\\\\node\>\""}], "]"}], ",", 
+           RowBox[{"(*", 
+            RowBox[{
+            "Extract", " ", "node", " ", "ID", " ", "and", " ", 
+             "coordinates"}], "*)"}], 
+           RowBox[{
+            RowBox[{"parts", "=", 
+             RowBox[{"StringCases", "[", 
+              RowBox[{"line", ",", 
+               RowBox[{
+                RowBox[{
+                "\"\<\\\\node [\>\"", "~~", "___", "~~", "\"\<] (\>\"", "~~", 
+                 RowBox[{"nodeID", ":", 
+                  RowBox[{"DigitCharacter", ".."}]}], "~~", "\"\<) at (\>\"", 
+                 "~~", 
+                 RowBox[{"x", ":", 
+                  RowBox[{
+                   RowBox[{"(", 
+                    RowBox[{
+                    "DigitCharacter", "|", "\"\<.\>\"", "|", "\"\<-\>\"", 
+                    "|", "\"\<E\>\""}], ")"}], ".."}]}], "~~", "\"\<, \>\"", "~~", 
+                 RowBox[{"y", ":", 
+                  RowBox[{
+                   RowBox[{"(", 
+                    RowBox[{
+                    "DigitCharacter", "|", "\"\<.\>\"", "|", "\"\<-\>\"", 
+                    "|", "\"\<E\>\""}], ")"}], ".."}]}], "~~", 
+                 "\"\<) {};\>\""}], ":>", 
+                RowBox[{"{", 
+                 RowBox[{"nodeID", ",", "x", ",", "y"}], "}"}]}]}], "]"}]}], 
+            ";", "\[IndentingNewLine]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Length", "[", "parts", "]"}], ">", "0"}], ",", 
+              RowBox[{
+               RowBox[{"nodeID", "=", 
+                RowBox[{"ToExpression", "[", 
+                 RowBox[{"parts", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"1", ",", "1"}], "]"}], "]"}], "]"}]}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"xCoord", "=", 
+                RowBox[{"ToExpression", "[", 
+                 RowBox[{"parts", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"1", ",", "2"}], "]"}], "]"}], "]"}]}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"yCoord", "=", 
+                RowBox[{"ToExpression", "[", 
+                 RowBox[{"parts", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"1", ",", "3"}], "]"}], "]"}], "]"}]}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"AppendTo", "[", 
+                RowBox[{"nodes", ",", 
+                 RowBox[{"nodeID", "->", 
+                  RowBox[{"{", 
+                   RowBox[{"xCoord", ",", "yCoord"}], "}"}]}]}], "]"}], 
+               ";"}]}], "]"}], ";"}]}], "]"}], ";"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Extract", " ", "edge", " ", "information"}], "*)"}], 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "1"}], ",", 
+        RowBox[{"i", "<=", 
+         RowBox[{"Length", "[", "lines", "]"}]}], ",", 
+        RowBox[{"i", "++"}], ",", 
+        RowBox[{
+         RowBox[{"line", "=", 
+          RowBox[{"StringTrim", "[", 
+           RowBox[{"lines", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"StringStartsQ", "[", 
+            RowBox[{"line", ",", "\"\<\\\\draw\>\""}], "]"}], ",", 
+           RowBox[{"(*", 
+            RowBox[{
+            "Extract", " ", "the", " ", "start", " ", "and", " ", "end", " ", 
+             "nodes", " ", "of", " ", "edges"}], "*)"}], 
+           RowBox[{
+            RowBox[{"parts", "=", 
+             RowBox[{"StringCases", "[", 
+              RowBox[{"line", ",", 
+               RowBox[{
+                RowBox[{"\"\<\\\\draw (\>\"", "~~", 
+                 RowBox[{"startNode", ":", 
+                  RowBox[{"DigitCharacter", ".."}]}], "~~", "\"\<) to (\>\"", 
+                 "~~", 
+                 RowBox[{"endNode", ":", 
+                  RowBox[{"DigitCharacter", ".."}]}], "~~", "\"\<);\>\""}], ":>", 
+                RowBox[{"{", 
+                 RowBox[{"startNode", ",", "endNode"}], "}"}]}]}], "]"}]}], 
+            ";", "\[IndentingNewLine]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Length", "[", "parts", "]"}], ">", "0"}], ",", 
+              RowBox[{
+               RowBox[{"startNode", "=", 
+                RowBox[{"ToExpression", "[", 
+                 RowBox[{"parts", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"1", ",", "1"}], "]"}], "]"}], "]"}]}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"endNode", "=", 
+                RowBox[{"ToExpression", "[", 
+                 RowBox[{"parts", "[", 
+                  RowBox[{"[", 
+                   RowBox[{"1", ",", "2"}], "]"}], "]"}], "]"}]}], ";", 
+               "\[IndentingNewLine]", 
+               RowBox[{"AppendTo", "[", 
+                RowBox[{"edges", ",", 
+                 RowBox[{"UndirectedEdge", "[", 
+                  RowBox[{"startNode", ",", "endNode"}], "]"}]}], "]"}], 
+               ";"}]}], "]"}], ";"}]}], "]"}], ";"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+       "Create", " ", "the", " ", "graph", " ", "from", " ", "extracted", " ",
+         "edges", " ", "and", " ", "node", " ", "positions"}], "*)"}], 
+      RowBox[{"g", "=", 
+       RowBox[{"Graph", "[", 
+        RowBox[{"edges", ",", 
+         RowBox[{"VertexCoordinates", "->", "nodes"}], ",", 
+         RowBox[{"VertexStyle", "->", 
+          RowBox[{"GrayLevel", "[", "1", "]"}]}], ",", 
+         RowBox[{"VertexSize", "->", "Medium"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Return", " ", "the", " ", "graph"}], "*)"}], "g"}]}], "]"}]}],
+   "\n"}], "\n", 
+ RowBox[{"graph", "=", 
+  RowBox[{
+  "ImportTikZGraph", "[", "\"\<scaled_graph_output.tikz\>\"", 
+   "]"}]}], "\n"}], "Input",
+ CellChangeTimes->{{3.9422728933124905`*^9, 3.9422728933135033`*^9}, 
+   3.942273444561838*^9, 3.942283408135113*^9, {3.9422834645494328`*^9, 
+   3.942283468575121*^9}, 3.9422835570406876`*^9, {3.942283614891199*^9, 
+   3.942283643343748*^9}},
+ CellLabel->
+  "In[146]:=",ExpressionUUID->"deaa9f13-82ba-9f4e-ada8-b854ab642831"],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+       20}, {Null, {{1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}, {1, 8}, {
+       1, 9}, {1, 10}, {1, 11}, {1, 12}, {1, 13}, {1, 14}, {1, 15}, {1, 16}, {
+       1, 17}, {1, 18}, {1, 19}, {1, 20}, {2, 3}, {2, 20}, {3, 4}, {4, 5}, {5,
+        6}, {6, 7}, {7, 8}, {8, 9}, {9, 10}, {10, 11}, {11, 12}, {12, 13}, {
+       13, 14}, {14, 15}, {15, 16}, {16, 17}, {17, 18}, {18, 19}, {19, 
+       20}}}, {VertexSize -> {Medium}, VertexStyle -> {
+         GrayLevel[1]}, VertexCoordinates -> CompressedData["
+1:eJxTTMoPSmViYGAQAWIQjQ7M5K+3dU2UOGDuX3ri7AR5h9IyIwuvfQoHpBsr
+Yvc/EHUQv3nue3Cy8gH/9VNSOxYzO0SEzZrS9E75wI0GjsKnOa/2Wxj1/zkY
+oHTAbLVdeLSgwIHTXpODLuTKHkg97qYQJy59QEPnY8MmTuEDqUs9NV9MUzzQ
+Mu/sqvOhv/Y7/2cR196lDOPbw/hQ9Q4w9VDzHGDmQe1zgNkHdY8DzD1Q9zrA
+3Av1jwPMP1D/OsD8q968+MnVn5wOziwyTlNfKTloVnx5KbPr/x5I6KjA5A/A
+5AEJrIjp
+        "]}]]}, 
+    TagBox[GraphicsGroupBox[GraphicsComplexBox[CompressedData["
+1:eJxTTMoPSmViYGAQAWIQjQ7M5K+3dU2UOGDuX3ri7AR5h9IyIwuvfQoHpBsr
+Yvc/EHUQv3nue3Cy8gH/9VNSOxYzO0SEzZrS9E75wI0GjsKnOa/2Wxj1/zkY
+oHTAbLVdeLSgwIHTXpODLuTKHkg97qYQJy59QEPnY8MmTuEDqUs9NV9MUzzQ
+Mu/sqvOhv/Y7/2cR196lDOPbw/hQ9Q4w9VDzHGDmQe1zgNkHdY8DzD1Q9zrA
+3Av1jwPMP1D/OsD8q968+MnVn5wOziwyTlNfKTloVnx5KbPr/x5I6KjA5A/A
+5AEJrIjp
+       "], {
+        {Hue[0.6, 0.7, 0.5], Opacity[0.7], Arrowheads[0.], 
+         ArrowBox[{{1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}, {1, 8}, {1,
+           9}, {1, 10}, {1, 11}, {1, 12}, {1, 13}, {1, 14}, {1, 15}, {1, 
+          16}, {1, 17}, {1, 18}, {1, 19}, {1, 20}, {2, 3}, {2, 20}, {3, 4}, {
+          4, 5}, {5, 6}, {6, 7}, {7, 8}, {8, 9}, {9, 10}, {10, 11}, {11, 
+          12}, {12, 13}, {13, 14}, {14, 15}, {15, 16}, {16, 17}, {17, 18}, {
+          18, 19}, {19, 20}}, 0.32918824200296104`]}, 
+        {GrayLevel[1], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+         DiskBox[1, 0.32918824200296104], DiskBox[2, 0.32918824200296104], 
+         DiskBox[3, 0.32918824200296104], DiskBox[4, 0.32918824200296104], 
+         DiskBox[5, 0.32918824200296104], DiskBox[6, 0.32918824200296104], 
+         DiskBox[7, 0.32918824200296104], DiskBox[8, 0.32918824200296104], 
+         DiskBox[9, 0.32918824200296104], DiskBox[10, 0.32918824200296104], 
+         DiskBox[11, 0.32918824200296104], DiskBox[12, 0.32918824200296104], 
+         DiskBox[13, 0.32918824200296104], DiskBox[14, 0.32918824200296104], 
+         DiskBox[15, 0.32918824200296104], DiskBox[16, 0.32918824200296104], 
+         DiskBox[17, 0.32918824200296104], DiskBox[18, 0.32918824200296104], 
+         DiskBox[19, 0.32918824200296104], 
+         DiskBox[20, 0.32918824200296104]}}]],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False]],
+  DefaultBaseStyle->"NetworkGraphics",
+  FormatType->TraditionalForm,
+  FrameTicks->None]], "Output",
+ CellChangeTimes->{3.942283643714588*^9},
+ CellLabel->
+  "Out[148]=",ExpressionUUID->"2a95aba8-3d9a-7147-b650-98e00775d9f9"]
+}, Open  ]]
+},
+WindowSize->{1525.2, 795.5999999999999},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"14.1 for Microsoft Windows (64-bit) (2024\:5e747\:670816\
+\:65e5)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"2a961271-e9d7-154b-859f-37b704758f90"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[1482, 35, 8259, 200, 1016, "Input",ExpressionUUID->"deaa9f13-82ba-9f4e-ada8-b854ab642831"],
+Cell[9744, 237, 3077, 53, 485, "Output",ExpressionUUID->"2a95aba8-3d9a-7147-b650-98e00775d9f9"]
+}, Open  ]]
+}
+]
+*)
+
