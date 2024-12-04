@@ -1,4 +1,4 @@
-This is the conversion between Mathematica and TikZiT software for handling graph visualization and computation.
+This is the conversion between Mathematica and TikZiT (https://github.com/tikzit/tikzit)   for handling graph visualization and computation.
 
 
 
