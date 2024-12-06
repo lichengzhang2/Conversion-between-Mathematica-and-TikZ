@@ -82,7 +82,9 @@ Output:
 
 
 
-## 2. graph from  tikz to Mathematica
+## 2. graph from  tikz to Mathematica 
+
+Thanks to azerbajdzan, see https://mathematica.stackexchange.com/questions/309144/convert-tikz-in-tikzit-code-to-a-graph-in-mathematica.
 ```
 SetDirectory[NotebookDirectory[]];
 graph = ImportTikZGraph["scaled_graph_output.tikz"];
