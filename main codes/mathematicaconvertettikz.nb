@@ -1,0 +1,248 @@
+(* Content-type: application/vnd.wolfram.cdf.text *)
+
+(*** Wolfram CDF File ***)
+(* http://www.wolfram.com/cdf *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*************************************************************************)
+(*                                                                       *)
+(*                                                                       *)
+(*  This file was created under the Wolfram Enterprise licensing terms.  *)
+(*                                                                       *)
+(*       For additional information concerning CDF licensing see:        *)
+(*                                                                       *)
+(*        www.wolfram.com/cdf/adopting-cdf/licensing-options.html        *)
+(*                                                                       *)
+(*                                                                       *)
+(*                                                                       *)
+(*************************************************************************)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[      1060,         20]
+NotebookDataLength[      9904,        227]
+NotebookOptionsPosition[     10294,        222]
+NotebookOutlinePosition[     10721,        239]
+CellTagsIndexPosition[     10678,        236]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"generateTikZCode", "[", 
+    RowBox[{"graph_", ",", "outputFileName_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "vertices", ",", "coords", ",", "edges", ",", "maxCoord", ",", 
+       "numVertices", ",", "targetRange", ",", "scaleFactor", ",", 
+       "scaledCoords", ",", "tikzCode"}], "}"}], ",", 
+     RowBox[{
+     "(*", "\:63d0\:53d6\:8282\:70b9\:548c\:5750\:6807\:4fe1\:606f", "*)"}], 
+     RowBox[{
+      RowBox[{"vertices", "=", 
+       RowBox[{"VertexList", "[", "graph", "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"coords", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"PropertyValue", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"graph", ",", "#"}], "}"}], ",", "VertexCoordinates"}], 
+          "]"}], "&"}], "/@", "vertices"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", "\:63d0\:53d6\:8fb9\:4fe1\:606f", "*)"}], 
+      RowBox[{"edges", "=", 
+       RowBox[{"EdgeList", "[", "graph", "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+      "(*", "\:627e\:5230\:5750\:6807\:7684\:6700\:5927\:7edd\:5bf9\:503c", 
+       "*)"}], 
+      RowBox[{"maxCoord", "=", 
+       RowBox[{"Max", "[", 
+        RowBox[{"Abs", "[", 
+         RowBox[{"coords", "//", "N"}], "]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+      "(*", "\:6839\:636e\:9876\:70b9\:6570\:91cf\:9009\:62e9\:76ee\:6807\
+\:8303\:56f4\:548c\:7f29\:653e\:56e0\:5b50", "*)"}], 
+      RowBox[{"numVertices", "=", 
+       RowBox[{"Length", "[", "vertices", "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"targetRange", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"numVertices", ">", "20"}], ",", "10", ",", "5"}], "]"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", "\:8ba1\:7b97\:7f29\:653e\:56e0\:5b50", "*)"}], 
+      RowBox[{"scaleFactor", "=", 
+       RowBox[{"targetRange", "/", "maxCoord"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+       "\:5982\:679c\:6700\:5927\:7edd\:5bf9\:503c\:5c0f\:4e8e5", "\:ff0c", 
+        RowBox[{"\:5219\:6269\:5927\:5230", "-", 
+         RowBox[{"10", " ", "\:5230", " ", "10"}]}]}], "*)"}], 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"maxCoord", "<", "5"}], ",", 
+        RowBox[{"scaleFactor", "=", 
+         RowBox[{"10", "/", "maxCoord"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+      "(*", "\:5bf9\:8282\:70b9\:5750\:6807\:8fdb\:884c\:7b49\:6bd4\:4f8b\
+\:7f29\:653e", "*)"}], 
+      RowBox[{"scaledCoords", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"scaleFactor", " ", "#"}], ")"}], "&"}], "/@", "coords"}]}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", "\:751f\:6210TikZ\:4ee3\:7801", "*)"}], 
+      RowBox[{"tikzCode", "=", 
+       RowBox[{"StringJoin", "[", 
+        RowBox[{
+        "\"\<\\\\begin{tikzpicture}[scale=1.0]\\n\>\"", ",", 
+         "\"\<  \\\\begin{pgfonlayer}{nodelayer}\\n\>\"", ",", 
+         RowBox[{"StringRiffle", "[", 
+          RowBox[{
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{"ToString", "[", 
+              RowBox[{"TemplateApply", "[", 
+               RowBox[{
+               "\"\<\\\\node [style=whitenode] (`v`) at (`x`, `y`) \
+{};\\n\>\"", ",", 
+                RowBox[{"<|", 
+                 RowBox[{
+                  RowBox[{"\"\<v\>\"", "->", 
+                   RowBox[{"vertices", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}]}], ",", 
+                  RowBox[{"\"\<x\>\"", "->", 
+                   RowBox[{"scaledCoords", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", ",", "1"}], "]"}], "]"}]}], ",", 
+                  RowBox[{"\"\<y\>\"", "->", 
+                   RowBox[{"scaledCoords", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", ",", "2"}], "]"}], "]"}]}]}], "|>"}]}], 
+               "]"}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"i", ",", 
+               RowBox[{"Length", "[", "vertices", "]"}]}], "}"}]}], "]"}], 
+           ",", "\"\<\>\""}], "]"}], ",", "\"\<  \\\\end{pgfonlayer}\\n\>\"", 
+         ",", "\"\<  \\\\begin{pgfonlayer}{edgelayer}\\n\>\"", ",", 
+         RowBox[{"StringRiffle", "[", 
+          RowBox[{
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{"ToString", "[", 
+              RowBox[{"TemplateApply", "[", 
+               RowBox[{"\"\<\\\\draw (`v1`) to (`v2`);\\n\>\"", ",", 
+                RowBox[{"<|", 
+                 RowBox[{
+                  RowBox[{"\"\<v1\>\"", "->", 
+                   RowBox[{"First", "[", 
+                    RowBox[{"edges", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], "]"}]}], ",", 
+                  RowBox[{"\"\<v2\>\"", "->", 
+                   RowBox[{"Last", "[", 
+                    RowBox[{"edges", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], "]"}]}]}], "|>"}]}], 
+               "]"}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"i", ",", 
+               RowBox[{"Length", "[", "edges", "]"}]}], "}"}]}], "]"}], ",", 
+           "\"\<\>\""}], "]"}], ",", "\"\<  \\\\end{pgfonlayer}\\n\>\"", ",", 
+         "\"\<\\\\end{tikzpicture}\>\""}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", "\:6253\:5370\:751f\:6210\:7684TikZ\:4ee3\:7801", "*)"}], 
+      RowBox[{"Print", "[", "tikzCode", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+      "(*", "\:5c06\:751f\:6210\:7684TikZ\:4ee3\:7801\:4fdd\:5b58\:5230\:6587\
+\:4ef6", "*)"}], 
+      RowBox[{"Export", "[", 
+       RowBox[{"outputFileName", ",", "tikzCode", ",", "\"\<Text\>\""}], 
+       "]"}], ";"}]}], "]"}]}], "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", "\:793a\:4f8b\:4f7f\:7528", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"g", "=", 
+   RowBox[{"WheelGraph", "[", "20", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"generateTikZCode", "[", 
+   RowBox[{"g", ",", "\"\<scaled_graph_output.tikz\>\""}], "]"}], 
+  ";"}], "\n"}], "Input",
+ CellChangeTimes->{{3.942272810320076*^9, 3.942272810320076*^9}},
+ CellLabel->"In[65]:=",ExpressionUUID->"78bd6d5f-5155-0f47-bf97-66786e449e4c"],
+
+Cell[BoxData["\<\"\\\\begin{tikzpicture}[scale=1.0]\\n  \
+\\\\begin{pgfonlayer}{nodelayer}\\n\\\\node [style=whitenode] (1) at (0.0, \
+0.0) {};\\n\\\\node [style=whitenode] (2) at (-6.14213, 7.89141) \
+{};\\n\\\\node [style=whitenode] (3) at (-8.37166, 5.46948) {};\\n\\\\node \
+[style=whitenode] (4) at (-9.694, 2.45485) {};\\n\\\\node [style=whitenode] \
+(5) at (-9.96584, -0.825793) {};\\n\\\\node [style=whitenode] (6) at \
+(-9.15773, -4.01695) {};\\n\\\\node [style=whitenode] (7) at (-7.35724, \
+-6.77282) {};\\n\\\\node [style=whitenode] (8) at (-4.75947, -8.79474) {};\\n\
+\\\\node [style=whitenode] (9) at (-1.64595, -9.86361) {};\\n\\\\node \
+[style=whitenode] (10) at (1.64595, -9.86361) {};\\n\\\\node \
+[style=whitenode] (11) at (4.75947, -8.79474) {};\\n\\\\node \
+[style=whitenode] (12) at (7.35724, -6.77282) {};\\n\\\\node \
+[style=whitenode] (13) at (9.15773, -4.01695) {};\\n\\\\node \
+[style=whitenode] (14) at (9.96584, -0.825793) {};\\n\\\\node \
+[style=whitenode] (15) at (9.694, 2.45485) {};\\n\\\\node [style=whitenode] \
+(16) at (8.37166, 5.46948) {};\\n\\\\node [style=whitenode] (17) at (6.14213, \
+7.89141) {};\\n\\\\node [style=whitenode] (18) at (3.24699, 9.45817) {};\\n\\\
+\\node [style=whitenode] (19) at (-0.00000000000000704481, 10.0) \
+{};\\n\\\\node [style=whitenode] (20) at (-3.24699, 9.45817) {};\\n  \
+\\\\end{pgfonlayer}\\n  \\\\begin{pgfonlayer}{edgelayer}\\n\\\\draw (1) to \
+(2);\\n\\\\draw (1) to (3);\\n\\\\draw (1) to (4);\\n\\\\draw (1) to \
+(5);\\n\\\\draw (1) to (6);\\n\\\\draw (1) to (7);\\n\\\\draw (1) to \
+(8);\\n\\\\draw (1) to (9);\\n\\\\draw (1) to (10);\\n\\\\draw (1) to \
+(11);\\n\\\\draw (1) to (12);\\n\\\\draw (1) to (13);\\n\\\\draw (1) to (14);\
+\\n\\\\draw (1) to (15);\\n\\\\draw (1) to (16);\\n\\\\draw (1) to (17);\\n\\\
+\\draw (1) to (18);\\n\\\\draw (1) to (19);\\n\\\\draw (1) to \
+(20);\\n\\\\draw (2) to (3);\\n\\\\draw (2) to (20);\\n\\\\draw (3) to \
+(4);\\n\\\\draw (4) to (5);\\n\\\\draw (5) to (6);\\n\\\\draw (6) to \
+(7);\\n\\\\draw (7) to (8);\\n\\\\draw (8) to (9);\\n\\\\draw (9) to (10);\\n\
+\\\\draw (10) to (11);\\n\\\\draw (11) to (12);\\n\\\\draw (12) to (13);\\n\\\
+\\draw (13) to (14);\\n\\\\draw (14) to (15);\\n\\\\draw (15) to \
+(16);\\n\\\\draw (16) to (17);\\n\\\\draw (17) to (18);\\n\\\\draw (18) to \
+(19);\\n\\\\draw (19) to (20);\\n  \\\\end{pgfonlayer}\\n\\\\end{tikzpicture}\
+\"\>"], "Print",
+ CellChangeTimes->{3.9422730140156918`*^9},
+ CellLabel->
+  "\:6b63\:5728\:8ba1\:7b97In[65]:=",ExpressionUUID->"02a4374b-ade0-c943-ae62-\
+47a564a0df36"]
+}, Open  ]]
+},
+WindowSize->{1525.2, 795.5999999999999},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"14.1 for Microsoft Windows (64-bit) (2024\:5e747\:670816\
+\:65e5)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"64c9ece0-e6fd-104d-a2d8-6de435d901cd"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[1482, 35, 6243, 145, 890, "Input",ExpressionUUID->"78bd6d5f-5155-0f47-bf97-66786e449e4c"],
+Cell[7728, 182, 2550, 37, 1410, "Print",ExpressionUUID->"02a4374b-ade0-c943-ae62-47a564a0df36"]
+}, Open  ]]
+}
+]
+*)
+
